@@ -8,7 +8,7 @@ public class ConnectionFactory {
 	private static ConnectionFactory instancia;
 	
 	private ConnectionFactory() {
-		final String DB_URL = "jdbc:mysql://localhost:travel_system";
+		final String DB_URL = "jdbc:mysql://localhost/dbtravelsystem";
 		final String USERNAME = "root";
 		final String PASSWORD = "";
 		
