@@ -13,10 +13,13 @@ public class ConnectionFactory {
 		final String PASSWORD = "";
 		
 		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			System.out.println("Conectando...");
 			this.connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 		} catch(SQLException e) {
 			System.out.println("Error" + e.getMessage());
+		} catch(ClassNotFoundException e) {
+			System.out.println("Erro ao encontrar classe " + e.getMessage());
 		}
 	}
 	

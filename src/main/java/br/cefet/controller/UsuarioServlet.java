@@ -22,7 +22,6 @@ public class UsuarioServlet extends HttpServlet {
 		String senha = String.valueOf(request.getParameter("senha"));
 		
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
 			Usuario usuario = new Usuario();
 			usuario.setLogin(login);
 			usuario.setSenha(senha);
@@ -30,11 +29,11 @@ public class UsuarioServlet extends HttpServlet {
 			UsuarioDao usuarioDao = new UsuarioDao();
 			usuarioDao.adiciona(usuario);
 			
-		} catch(ClassNotFoundException e) {
-			System.out.println("Erro ao encontrar classe " + e.getMessage());
+		} catch(Exception e) {
+			System.out.println("Ocorreu um erro ao criar usuário"  + e.getMessage());
 		}
 		
-		System.out.println("Login value" + login);
+		System.out.println("Login value " + login);
 		response.getWriter().append("Server at:" + "Teste");
 	}
 	
