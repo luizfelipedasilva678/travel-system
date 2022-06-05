@@ -1,47 +1,50 @@
 create database if not exists dbtravelsystem;
 use dbtravelsystem; 
 
-create table if not exists usuario (
+create table if not exists user (
     id int auto_increment,
-    senha varchar(100) not null,
+    password varchar(100) not null,
     login varchar(100) not null,
     role int default 1,
     primary key(id)
 )ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1; 
 
-create table if not exists pais (
+create table if not exists country (
     id int auto_increment,
-    nome varchar(100),
+    name varchar(100),
     primary key(id)
 )ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-create table if not exists local_visitado (
+create table if not exists place_visited (
     id int auto_increment,
-    imagem varchar(100) not null,
-    nome varchar(100) not null,
-    id_pais int not null,
+    image varchar(100) not null,
+    name varchar(100) not null,
+    id_country int not null,
     primary key(id),
-    constraint foreign key(id_pais) references pais(id) on delete restrict on update cascade
+    constraint foreign key(id_country) references country(id) on delete restrict on update cascade
 )ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-create table if not exists comentario (
+
+create table if not exists experience (
     id int auto_increment,
-    conteudo varchar(100),
-    id_usuario int not null,
+    content varchar(100) not null,
+    rating int default null,
+    total_cost double not null,
+    arrival_day date not null,
+    departure_day date not null,
+    id_place_visited int not null,
+    id_user int not null,
     primary key(id),
-    constraint foreign key(id_usuario) references usuario(id) on delete restrict on update cascade	
+    constraint foreign key(id_place_visited) references place_visited(id) on delete restrict on update cascade,
+    constraint foreign key(id_user) references user(id) on delete restrict on update cascade
 )ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1; 
 
-create table if not exists experiencia (
+create table if not exists comment (
     id int auto_increment,
-    conteudo varchar(100) not null,
-    avalicao int default null,
-    custo_total double not null,
-    dia_de_chegada date not null,
-    dia_de_partida date not null,
-    id_local_visitado int not null,
-    id_usuario int not null,
+    content varchar(100),
+    id_user int not null,
+    id_experience int not null,
     primary key(id),
-    constraint foreign key(id_local_visitado) references local_visitado(id) on delete restrict on update cascade,
-    constraint foreign key(id_usuario) references usuario(id) on delete restrict on update cascade
+    constraint foreign key(id_user) references user(id) on delete restrict on update cascade,
+    constraint foreign key(id_experience) references experience(id) on delete restrict on update cascade	
 )ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1; 

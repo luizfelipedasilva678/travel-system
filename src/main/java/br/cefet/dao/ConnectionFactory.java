@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	private Connection connection = null;
-	private static ConnectionFactory instancia;
+	private static ConnectionFactory instance;
 	
 	private ConnectionFactory() {
 		final String DB_URL = "jdbc:mysql://localhost/dbtravelsystem";
@@ -14,12 +14,12 @@ public class ConnectionFactory {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			System.out.println("Conectando...");
+			System.out.println("Connection...");
 			this.connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 		} catch(SQLException e) {
 			System.out.println("Error" + e.getMessage());
 		} catch(ClassNotFoundException e) {
-			System.out.println("Erro ao encontrar classe " + e.getMessage());
+			System.out.println("Error on find class" + e.getMessage());
 		}
 	}
 	
@@ -28,10 +28,10 @@ public class ConnectionFactory {
 	}
 	
 	public static ConnectionFactory getInstance() {
-		if(instancia == null) {
-			instancia = new ConnectionFactory();
+		if(instance == null) {
+			instance = new ConnectionFactory();
 		}
 		
-		return instancia;
+		return instance;
 	}
 }

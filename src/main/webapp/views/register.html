@@ -5,15 +5,18 @@
 <title>Registre-se</title>
 </head>
 <body>
-	<form action="../UsuarioServlet" method="post">
+	<form action="../ControlServlet" method="post">
 		<div>
 			<label for="login">Login:</label>
 			<input id="login" name="login" type="text"/>
 		</div>
 		<div>
 			<label for="senha">Senha:</label>
-			<input id="senha" name="senha" type="password"/>
+			<input id="password" name="password" type="password"/>
 		</div>
+		
+		<input type="hidden" name="xclass" value="UserServlet" />
+		<input type="hidden" name="action" value="add" /> 
 		
 		<input value="Registrar" type="submit" />
 	</form>
