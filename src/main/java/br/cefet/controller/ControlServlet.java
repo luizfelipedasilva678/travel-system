@@ -1,15 +1,20 @@
 package br.cefet.controller;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/ControlServlet")
+@MultipartConfig(
+  fileSizeThreshold = 1024 * 1024 * 1, 
+  maxFileSize = 1024 * 1024 * 10,      
+  maxRequestSize = 1024 * 1024 * 100 
+)
 public class ControlServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
   
@@ -17,7 +22,7 @@ public class ControlServlet extends HttpServlet {
         super();
     }
     
-    public void init(HttpServletRequest request, HttpServletResponse response) {
+    public void init(HttpServletRequest request, HttpServletResponse response) {	
     	String name = String.valueOf(request.getParameter("xclass"));
 		String className = "br.cefet.controller." + name;
 			

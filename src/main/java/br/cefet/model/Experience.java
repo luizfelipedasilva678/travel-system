@@ -9,12 +9,16 @@ public class Experience {
 	private double totalCost;
 	private Date arrivalDay ;
 	private Date departureDay;
+	private User user;	
+	private PlaceVisited placeVisited;
 	
 	public Experience() {
 		super();
 	}
 	
-	public Experience(int id, String content, int rating, double totalCost, Date arrivalDay, Date departureDay) {
+	public Experience(int id, String content, int rating, 
+			double totalCost, Date arrivalDay, Date departureDay, 
+			User user, PlaceVisited placeVisited) {
 		super();
 		this.id = id;
 		this.content = content;
@@ -22,6 +26,8 @@ public class Experience {
 		this.totalCost = totalCost;
 		this.arrivalDay = arrivalDay;
 		this.departureDay = departureDay;
+		this.placeVisited = placeVisited;
+		this.user = user;
 	}
 
 	
@@ -72,5 +78,21 @@ public class Experience {
 
 	public void setDepartureDay(Date departureDay) {
 		this.departureDay = departureDay;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public PlaceVisited getPlaceVisited() {
+		return placeVisited;
+	}
+
+	public void setPlaceVisited(PlaceVisited placeVisited) {
+		this.placeVisited = placeVisited;
 	}
 }

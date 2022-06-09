@@ -1,9 +1,9 @@
 package br.cefet.controller;
 
 import java.io.IOException;
+
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import br.cefet.dao.UserDAO;
 import br.cefet.model.User;
 
-@WebServlet("/UserServlet")
-public class UserServlet extends HttpServlet implements IController {
+@WebServlet("/UserController")
+public class UserController extends HttpServlet implements IController {
 	private static final long serialVersionUID = 1L;
        
-    public UserServlet() {
+    public UserController() {
         super();
     }
 
