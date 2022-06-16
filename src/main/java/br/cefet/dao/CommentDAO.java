@@ -44,11 +44,13 @@ public class CommentDAO {
 	        }
 	    }
 
-	    public List<Comment> loadAllComments() {
+	    public List<Comment> loadAllComments(int experienceId) {
 	        List<Comment> comments = new ArrayList<Comment>();
 	        
 	        try {
-	            this.stmt = this.connection.prepareStatement("select * from comment");
+	            this.stmt = this.connection.prepareStatement("select * from comment where id_experience = ?");
+	            this.stmt = this.connection.prepareStatement(this.commandSQL);
+	            this.stmt.setInt(1, experienceId);
 	            ResultSet rs = this.stmt.executeQuery();
 	            
 	            while(rs.next()) {

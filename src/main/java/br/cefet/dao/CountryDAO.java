@@ -17,7 +17,7 @@ public class CountryDAO {
         this.connection = ConnectionFactory.getInstance().getConnection();
     }
 
-    public List<Country> loadAllPlaceVisited() {
+    public List<Country> loadAllCountries() {
         List<Country> countries = new ArrayList<Country>();
         try {
             this.stmt = this.connection.prepareStatement("select * from country");
