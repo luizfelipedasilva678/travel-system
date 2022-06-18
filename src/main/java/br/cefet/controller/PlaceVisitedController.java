@@ -1,6 +1,7 @@
 package br.cefet.controller;
 
 import java.io.File;
+
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import br.cefet.dao.PlaceVisitedDAO;
-import br.cefet.dao.UserDAO;
 import br.cefet.model.Country;
 import br.cefet.model.PlaceVisited;
 import br.cefet.model.User;

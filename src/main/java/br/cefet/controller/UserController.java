@@ -57,7 +57,7 @@ public class UserController extends HttpServlet implements IController {
 		userDao.add(user);
 		
 		try {
-			response.sendRedirect(request.getContextPath() + "/views/login.html");
+			response.sendRedirect(request.getContextPath() + "/views/login.jsp");
 		} catch (IOException e) {
 			System.out.println("Error on redirect" + e.getMessage());
 		}

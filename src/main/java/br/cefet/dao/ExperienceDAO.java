@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.cefet.model.Country;
 import br.cefet.model.Experience;
 import br.cefet.model.PlaceVisited;
 import br.cefet.model.User;
@@ -52,22 +53,42 @@ public class ExperienceDAO {
     public List<Experience> loadAllExperiences() {
         List<Experience> experiences = new ArrayList<Experience>();
         try {
-            this.stmt = this.connection.prepareStatement("select * from experience");
+            this.stmt = this.connection.prepareStatement("select \n"
+            		+ "e.content, \n"
+            		+ "e.rating, \n"
+            		+ "e.total_cost, \n"
+            		+ "e.arrival_day, \n"
+            		+ "e.departure_day, \n"
+            		+ "pv.image, \n"
+            		+ "pv.name as place_visited_name,\n"
+            		+ "c.name as country_name,\n"
+            		+ "u.login\n"
+            		+ "from experience e \n"
+            		+ "join place_visited pv on (pv.id = e.id_place_visited)\n"
+            		+ "join country c on (c.id = pv.id_country)\n"
+            		+ "join user u on (u.id = e.id_user)");
             ResultSet rs = this.stmt.executeQuery();
             
             while(rs.next()) {
                 User user = new User();
-                user.setId(rs.getInt("id_user"));
+                user.setLogin(rs.getString("login"));
+                
+                Country country = new Country();
+                country.setName(rs.getString("country_name"));
                 
                 PlaceVisited placeVisited = new PlaceVisited();
-                placeVisited.setId(rs.getInt("id_place_visited"));
+                placeVisited.setName(rs.getString("place_visited_name"));
+                placeVisited.setImage(rs.getString("image"));
+                placeVisited.setCountry(country);
                 
                 Experience experience = new Experience();
-                experience.setId(rs.getInt("id"));
                 experience.setContent(rs.getString("content"));
                 experience.setRating(rs.getInt("rating"));
+                experience.setTotalCost(rs.getDouble("total_cost"));
                 experience.setDepartureDay(rs.getDate("arrival_day"));
                 experience.setDepartureDay(rs.getDate("departure_day"));
+                experience.setUser(user);
+                experience.setPlaceVisited(placeVisited);
                 
                 experiences.add(experience);
             }
