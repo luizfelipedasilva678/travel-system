@@ -4,6 +4,13 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+<% 
+  	session = request.getSession();
+    
+	if(session.getAttribute("user-id") == null) {
+        response.sendRedirect("/travel-system/views/login.jsp");
+    }
+%>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -80,16 +80,13 @@
 }
 
 .footer {
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	
 	height: 30px;
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	font-size: 14px;
+	margin-top: 20px;
 	color: var(--white);
 	background: var(--blue);
 }
@@ -119,7 +116,7 @@
 
 .placeVisited__image img,
 .experience__image img {
-	max-width: 50%;
+	max-width: 100%;
 }
 
 .error-page {
@@ -197,3 +194,123 @@
 	border-radius: 2px;
 	cursor: pointer;
 }
+
+table {
+	font-family: Arial, Helvetica, sans-serif;
+  	border-collapse: collapse;
+  	width: 100%;
+  	margin-top: 50px;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+
+h-90 {
+	height: 90vh;
+}
+
+.logout-btn {
+	text-decoration: none;
+	color: var(--white);
+	font-size: 18px;
+	background: (--dark-blue);
+	padding: 10px;
+	border-radius: 2px;
+	position: absolute;
+	right: 20px;
+}
+
+.register-place-link {
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.placeVisited__main-content,
+.experience__main-content {
+	width: 100%;
+	background: #f1f1f1;
+	border: 1px dashed black;
+	margin-top: -10px;
+	margin-bottom: 15px;
+}
+
+.placeVisited__main-content p,
+.experience__main-content p {
+	font-size: 16px;
+	padding: 10px 10px 10px 10px;
+}
+
+.experience__comments {
+	width: 100%;
+	margin-left: 10px;
+}
+
+.experience__comments h2:first-child {
+	font-size: 16px;
+	margin-bottom: 15px;
+}
+
+.comment__wrapper {
+	margin-left: 20px;
+}
+
+.comment__author {
+	font-style: italic;
+	font-weight: bold;
+}
+
+.comment__main-content {
+	margin-left: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.comment__main-content P {
+	margin-bottom: 10px;
+}
+
+#commentRegisterForm textarea {
+	border: solid 1px black;
+	width: 300px;
+	border-radius: 2px;
+}
+
+#commentRegisterForm {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#commentRegisterForm input[type="submit"] {
+	margin-top: 10px;
+	border-radius: 2px;
+	background: var(--blue);
+	color: var(--white);
+	border:none;
+}
+
+#commentRegisterForm input[type="submit"]:hover {
+	background: var(--dark-blue);
+	transition: .2s;
+}
+
+
+
+

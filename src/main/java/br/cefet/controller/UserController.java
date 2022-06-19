@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +37,7 @@ public class UserController extends HttpServlet implements IController {
 		}
 		
 		if(action.equals("list")) {
-			this.listAll();
+			this.listAll(request, response);
 			return;
 		}
 		
@@ -51,6 +53,11 @@ public class UserController extends HttpServlet implements IController {
 		
 		if(action.equals("login")) {
 			this.login(request, response);
+			return;
+		}
+		
+		if(action.equals("logout")) {
+			this.logout(request, response);
 			return;
 		}
 	}
@@ -77,12 +84,16 @@ public class UserController extends HttpServlet implements IController {
 		userDao.remove(user);
 	}
 	
-	public void listAll() {
+	public void listAll(HttpServletRequest request, HttpServletResponse response) {
 		UserDAO userDao = new UserDAO();
 		List<User> users = userDao.loadAllUsers();
 		
-		for (User user : users) {
-		    System.out.println("Oi " + user.getLogin());
+		try {
+			RequestDispatcher rd = request.getRequestDispatcher("/views/users-list.jsp");
+			request.setAttribute("users", users);
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+			System.out.println("Error on include users");
 		}
 	}
 	
@@ -113,23 +124,39 @@ public class UserController extends HttpServlet implements IController {
 		UserDAO userDao = new UserDAO();
 		User loggedUser = userDao.login(user);
 		
-		if(loggedUser != null) {
+		if(loggedUser == null) {
+			try {
+				response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+				return;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(loggedUser != null) {	
 			HttpSession session;
 			session = request.getSession();
-			session.setAttribute("user-id", user.getId());
-			session.setAttribute("user-login", user.getLogin());
+			session.setAttribute("user-id", loggedUser.getId());
+			session.setAttribute("user-login", loggedUser.getLogin());
 				
 			try {
 				response.sendRedirect(request.getContextPath());
+				return;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else {
-			try {
-				response.sendRedirect(request.getContextPath() + "/views/login.jsp");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		}
+	}
+	
+	public void logout(HttpServletRequest request, HttpServletResponse response) {
+	    HttpSession session = request.getSession();  
+        session.invalidate();  
+        
+        
+        try {
+			response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

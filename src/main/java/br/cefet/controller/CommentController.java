@@ -1,9 +1,11 @@
 package br.cefet.controller;
 
 import java.io.IOException;
-
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +45,7 @@ public class CommentController extends HttpServlet implements IController {
 	
 	public void add(HttpServletRequest request, HttpServletResponse response)  {
 		String content = String.valueOf(request.getParameter("content"));
-		int idUser = Integer.valueOf(request.getParameter("idUsuario"));
+		int idUser = Integer.valueOf(request.getParameter("idUser"));
 		int idExperience = Integer.valueOf(request.getParameter("idExperience"));
 		
 		User user = new User();
@@ -61,8 +63,11 @@ public class CommentController extends HttpServlet implements IController {
 		commentDao.add(comment);
 		
 		try {
-			response.sendRedirect(request.getContextPath() + "/views/login.html");
-		} catch (IOException e) {
+			response.setStatus(200);
+			response.setContentType("text/xml");
+			PrintWriter writer=response.getWriter();
+			writer.append("Added with no erros");
+		} catch (Exception e) {
 			System.out.println("Error on redirect" + e.getMessage());
 		}
 	}
@@ -79,9 +84,14 @@ public class CommentController extends HttpServlet implements IController {
 		int idExperience = Integer.valueOf(request.getParameter("idExperience"));
 		CommentDAO commentDao = new CommentDAO();
 		List<Comment> comments = commentDao.loadAllComments(idExperience);
+		String pageUrl = "/views/sections/comments.jsp";
 		
-		for (Comment comment : comments) {
-		    System.out.println("Oi " + comment.getContent());
+		try {
+			RequestDispatcher rd = request.getRequestDispatcher(pageUrl);
+			request.setAttribute("comments", comments);
+			rd.include(request, response);
+		} catch (ServletException | IOException e) {
+			System.out.println("Error on include experience");
 		}
 	}
 }

@@ -100,7 +100,7 @@ public class UserDAO {
 
     public void update(User user) {
         try {
-            this.commandSQL = "Update user SET login = ?, password = ? WHERE id = ?";
+        	this.commandSQL = "Update user SET login = ?, password = ? WHERE id = ?";
             this.stmt = this.connection.prepareStatement(this.commandSQL);
             
             this.stmt.setString(1, user.getLogin());
@@ -138,6 +138,8 @@ public class UserDAO {
     }
     
     public User login(User user) {
+    	User loggedUser = null;
+    	
         try {
             this.commandSQL = "SELECT * from user where login = ? and password = ?";
             this.stmt = this.connection.prepareStatement(this.commandSQL);
@@ -146,11 +148,12 @@ public class UserDAO {
             ResultSet rs = this.stmt.executeQuery();
             
             if(rs.next()) {
-            	user.setId(rs.getInt("id"));
-            	user.setLogin(rs.getString("login"));
+            	loggedUser = new User();
+            	loggedUser.setId(rs.getInt("id"));
+            	loggedUser.setLogin(rs.getString("login"));
             }
-       
-            return user;
+            
+            return loggedUser;
             
         } catch(SQLException e) {
             System.out.println("Error on login" + e.getMessage());

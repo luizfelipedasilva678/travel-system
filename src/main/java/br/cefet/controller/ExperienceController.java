@@ -120,8 +120,21 @@ public class ExperienceController extends HttpServlet implements IController {
 		int id = Integer.valueOf(request.getParameter("id"));
 		ExperienceDAO experienceDAO = new ExperienceDAO();
 		Experience experience = experienceDAO.loadExperienceById(id);
+		String pageUrl = "/views/experience-page.jsp";
+		
+		
+		try {
+			RequestDispatcher rd = request.getRequestDispatcher(pageUrl);
 
-		System.out.println("Teste " + experience.getContent());
+			if (experience != null) {
+				request.setAttribute("experience", experience);
+			}
+			
+			rd.forward(request, response);
+
+		} catch (ServletException | IOException e) {
+			System.out.println("Error on include experience");
+		}
 	}
 
 	public void update(HttpServletRequest request, HttpServletResponse response) {
