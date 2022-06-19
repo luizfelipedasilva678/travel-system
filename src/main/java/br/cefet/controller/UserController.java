@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.cefet.dao.UserDAO;
 import br.cefet.model.User;
@@ -45,6 +46,11 @@ public class UserController extends HttpServlet implements IController {
 		
 		if(action.equals("update")) {
 			this.update(request, response);
+			return;
+		}
+		
+		if(action.equals("login")) {
+			this.login(request, response);
 			return;
 		}
 	}
@@ -95,5 +101,35 @@ public class UserController extends HttpServlet implements IController {
 		User user = new User(id, password, login);
 		UserDAO userDao = new UserDAO();
 		userDao.update(user);
+	}
+	
+	public void login(HttpServletRequest request, HttpServletResponse response) {
+		String login = String.valueOf(request.getParameter("login"));
+		String password = String.valueOf(request.getParameter("password"));		
+		User user = new User();
+		user.setLogin(login);
+		user.setPassword(password);
+		
+		UserDAO userDao = new UserDAO();
+		User loggedUser = userDao.login(user);
+		
+		if(loggedUser != null) {
+			HttpSession session;
+			session = request.getSession();
+			session.setAttribute("user-id", user.getId());
+			session.setAttribute("user-login", user.getLogin());
+				
+			try {
+				response.sendRedirect(request.getContextPath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

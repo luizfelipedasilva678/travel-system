@@ -6,17 +6,20 @@
 	</button>
 	<ul>
 		<li>
+			<a href="/travel-system" class="menu-container__ul-submenu"> Voltar para home </a>
+		</li>
+		<li>
 			<a href="#" class="menu-container__ul-submenu"> Lugares visitados <i class="bi bi-caret-down-fill"></i> </a>
 			<ul class="menu-container__ul-submenu-menu d-none">
-				<li><a href="#" class="menu-container__ul-submenu-item">Cadastrar lugar visitado</a></li>
-				<li><a href="#" class="menu-container__ul-submenu-item">Listar lugares visitados</a></li>
+				<li><a href="/travel-system/views/place-visited-register.jsp" class="menu-container__ul-submenu-item">Cadastrar lugar visitado</a></li>
+				<li><a href="/travel-system/views/place-visited-list.jsp" class="menu-container__ul-submenu-item">Listar lugares visitados</a></li>
 			</ul>
 		</li>
 		<li>
 			<a href="#" class="menu-container__ul-submenu"> Experiências <i class="bi bi-caret-down-fill"></i> </a>
 			<ul  class="menu-container__ul-submenu-menu d-none">
-				<li><a href="#" class="menu-container__ul-submenu-item">Cadastrar experiências </a></li>
-				<li><a href="#" class="menu-container__ul-submenu-item">Listar experiências </a></li>
+				<li><a href="/travel-system/views/experience-register.jsp" class="menu-container__ul-submenu-item">Cadastrar experiências </a></li>
+				<li><a href="/travel-system" class="menu-container__ul-submenu-item">Listar experiências </a></li>
 			</ul>
 		</li>
 	</ul>

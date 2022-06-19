@@ -81,6 +81,44 @@ public class PlaceVisitedDAO {
         }
     }
     
+    public List<PlaceVisited> loadAllPlaceVisitedByUserId(int id) {
+        List<PlaceVisited> placesVisited = new ArrayList<PlaceVisited>();
+        try {
+            this.stmt = this.connection.prepareStatement("select * from place_visited where id_user = ?");
+            this.stmt.setInt(1, id);
+            ResultSet rs = this.stmt.executeQuery();
+            
+            while(rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id_user"));
+                
+                Country country = new Country();
+                country.setId(rs.getInt("id_country"));
+                
+                PlaceVisited placeVisited= new PlaceVisited();
+                placeVisited.setCountry(country);
+                placeVisited.setUser(user);
+                placeVisited.setName(rs.getString("name"));
+                placeVisited.setId(rs.getInt("id"));
+                placeVisited.setImage(rs.getString("image"));
+                
+                placesVisited.add(placeVisited);
+            }
+
+            return placesVisited;
+            
+        } catch (SQLException e) {
+            System.out.println("Error on list places visited" + e.getMessage());
+            return null;
+        } finally {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                System.out.println("Error on list places visited" + e.getMessage());
+            }
+        }
+    }
+    
     public PlaceVisited loadPlaceVisitedById(int id) {
     	PlaceVisited placeVisited = new PlaceVisited();
     	User user = new User();

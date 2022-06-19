@@ -19,9 +19,12 @@
 					<input class="form__input" id="login" name="login" type="text"/>
 				</div>
 				<div class="form__input-wrapper">
-					<label class="form__label" for="senha">Senha:</label>
+					<label class="form__label" for="password">Senha:</label>
 					<input class="form__input" id="password" name="password" type="password"/>
 				</div>
+				
+				<input type="hidden" name="xclass" value="UserController" />
+				<input type="hidden" name="action" value="login" /> 
 				
 				<input class="form__submit-btn" value="Entrar" type="submit" />
 			</form>

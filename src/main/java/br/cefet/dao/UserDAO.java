@@ -79,6 +79,8 @@ public class UserDAO {
             	user.setId(rs.getInt("id"));
             	user.setLogin(rs.getString("login"));
             	user.setPassword(rs.getString("password"));
+            } else {
+            	return null;
             }
        
             return user;
@@ -131,6 +133,34 @@ public class UserDAO {
                 System.out.println(this.connection);
             } catch (SQLException e) {
                 System.out.println("Error on remove" + e.getMessage());
+            }
+        }
+    }
+    
+    public User login(User user) {
+        try {
+            this.commandSQL = "SELECT * from user where login = ? and password = ?";
+            this.stmt = this.connection.prepareStatement(this.commandSQL);
+            this.stmt.setString(1, user.getLogin());
+            this.stmt.setString(2, user.getPassword());
+            ResultSet rs = this.stmt.executeQuery();
+            
+            if(rs.next()) {
+            	user.setId(rs.getInt("id"));
+            	user.setLogin(rs.getString("login"));
+            }
+       
+            return user;
+            
+        } catch(SQLException e) {
+            System.out.println("Error on login" + e.getMessage());
+            return null;
+        } finally {
+            try {
+                this.stmt.close();
+                System.out.println(this.connection);
+            } catch (SQLException e) {
+                System.out.println("Error on login" + e.getMessage());
             }
         }
     }

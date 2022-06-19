@@ -83,7 +83,7 @@ public class ExperienceController extends HttpServlet implements IController {
 		experienceDao.add(experience);
 
 		try {
-			response.sendRedirect(request.getContextPath() + "/views/places-visited.jsp");
+			response.sendRedirect(request.getContextPath());
 		} catch (IOException e) {
 			System.out.println("Error on redirect" + e.getMessage());
 		}

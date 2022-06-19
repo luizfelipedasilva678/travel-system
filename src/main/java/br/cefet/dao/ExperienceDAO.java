@@ -23,7 +23,7 @@ public class ExperienceDAO {
 
     public void add(Experience experience) {
         this.commandSQL = "insert into experience(content, rating, total_cost, arrival_day, departure_day, id_place_visited, id_user) "
-        		+ "values(?,?)";
+        		+ "values(?,?,?,?,?,?,?)";
         
         try {
             this.stmt = this.connection.prepareStatement(this.commandSQL);
@@ -33,8 +33,8 @@ public class ExperienceDAO {
             this.stmt.setDouble(3, experience.getTotalCost());
             this.stmt.setDate(4, experience.getArrivalDay());
             this.stmt.setDate(5, experience.getDepartureDay());
-            this.stmt.setInt(6, experience.getUser().getId());
-            this.stmt.setInt(7, experience.getPlaceVisited().getId());
+            this.stmt.setInt(6, experience.getPlaceVisited().getId());
+            this.stmt.setInt(7, experience.getUser().getId());
             this.stmt.execute();
             System.out.println("Experience added with no errors");
 
