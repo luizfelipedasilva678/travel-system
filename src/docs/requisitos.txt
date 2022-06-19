@@ -1,0 +1,23 @@
+1. Manter usuário:
+	1. Cadastrar novo usuário.
+	2. Alterar usuário.
+	3. Excluir usuário.
+	4. Consultar usuário.
+	5. logar usuário
+
+2. Manter experiências
+	1. Cadastrar novo experiência.
+	2. Alterar experiência.
+	3. Excluir experiência.
+	4. Consultar experiência.
+
+3. Manter comentários
+	1. Cadastrar novo comentário.
+	2. exibir comentários.
+
+4. Manter locais visitados
+	1. Cadastrar novo locais visitados.
+	2. exibir locais visitados.
+	3. remover locais visitados.
+	4. atulizar local visitado.
+	
