@@ -26,3 +26,6 @@ local.properties
 .loadpath
 .factorypath
 /build/
+*.jpg
+*.png
+
