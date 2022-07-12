@@ -70,7 +70,7 @@ public class UserController extends HttpServlet implements IController {
 		userDao.add(user);
 		
 		try {
-			response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+			response.sendRedirect(request.getContextPath() + "/views/login-and-register/login.jsp");
 		} catch (IOException e) {
 			System.out.println("Error on redirect" + e.getMessage());
 		}
@@ -89,7 +89,7 @@ public class UserController extends HttpServlet implements IController {
 		List<User> users = userDao.loadAllUsers();
 		
 		try {
-			RequestDispatcher rd = request.getRequestDispatcher("/views/users-list.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/views/users/users-list.jsp");
 			request.setAttribute("users", users);
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
@@ -126,7 +126,7 @@ public class UserController extends HttpServlet implements IController {
 		
 		if(loggedUser == null) {
 			try {
-				response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+				response.sendRedirect(request.getContextPath() + "/views/login-and-register/login.jsp");
 				return;
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -154,7 +154,7 @@ public class UserController extends HttpServlet implements IController {
         
         
         try {
-			response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+			response.sendRedirect(request.getContextPath() + "/views/login-and-register/login.jsp");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

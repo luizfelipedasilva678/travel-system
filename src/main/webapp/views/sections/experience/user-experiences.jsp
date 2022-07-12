@@ -5,6 +5,12 @@
 
 <c:forEach var="experience" items="${experiences}">
 	<section class="experience__wrapper">
+		<a href="/travel-system/ControlServlet?xclass=ExperienceController&action=remove&id=${experience.getId()}">
+			<i class="bi bi-trash"></i>				
+		</a>
+		<button>
+			<i class="bi bi-pen"></i>
+		</button>
 		<figure class="experience__image">
 			<a href="/travel-system/ControlServlet?xclass=ExperienceController&action=listOne&id=${experience.getId()}" >
 				<img src="${experience.getPlaceVisited().getImage()}"  />
@@ -19,7 +25,6 @@
 		</main>
 		<footer class="experience__footer">
 			<p>Autor: <c:out value="${experience.getUser().getLogin()}"/></p>
-			${experience.getArrivalDay()}
 		</footer>
 	</section>
 </c:forEach>

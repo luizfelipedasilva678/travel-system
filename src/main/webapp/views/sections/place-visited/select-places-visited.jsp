@@ -4,7 +4,7 @@
 
 <c:choose>
 	<c:when test="${placesVisited.size() == 0}">
-		<a class="register-place-link" href="/travel-system/views/place-visited-register.jsp">Cadastre um lugar visitado primeiro</a>
+		<a class="register-place-link" href="/travel-system/views/place-visited/place-visited-register.jsp">Cadastre um lugar visitado primeiro</a>
 	</c:when>
 	<c:when test="${placesVisited.size() > 0}">
 		<select name="idPlaceVisited" id="idPlaceVisited">

@@ -11,7 +11,7 @@
 	<title> Usuários </title>
 </head>
 <body>
-	<jsp:include page="/views/sections/header.jsp" flush="true"/>
+	<jsp:include page="/views/sections/general/header.jsp" flush="true"/>
 	<main class="layout h-90">
 		<table>
 			<tr> 
@@ -29,8 +29,8 @@
 		</table>
 		
 	</main>
-	<jsp:include page="/views/sections/footer.jsp" flush="true"/>
-	<jsp:include page="/views/sections/menu.jsp" flush="true"/>
+	<jsp:include page="/views/sections/general/footer.jsp" flush="true"/>
+	<jsp:include page="/views/sections/general/menu.jsp" flush="true"/>
 	
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
 	<script src="${pageContext.request.contextPath}/js/comments.js"></script>

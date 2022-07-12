@@ -38,7 +38,7 @@ public class CountryController extends HttpServlet implements IController {
 		List<Country> countries = countryDao.loadAllCountries();
 
 		try {
-			RequestDispatcher rd = request.getRequestDispatcher("/views/sections/select-countries.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/views/sections/countries/select-countries.jsp");
 			request.setAttribute("countries", countries);
 			rd.include(request, response);
 		} catch (ServletException | IOException e) {

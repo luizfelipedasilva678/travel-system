@@ -85,22 +85,23 @@ public class PlaceVisitedDAO {
 	public List<PlaceVisited> loadAllPlaceVisitedByUserId(int id) {
 		List<PlaceVisited> placesVisited = new ArrayList<PlaceVisited>();
 		try {
-			this.stmt = this.connection.prepareStatement("select * from place_visited where id_user = ?");
+			this.stmt = this.connection.prepareStatement(
+					"SELECT pv.name as place_visited_name, pv.id as pv_id, pv.image, u.login, c.name FROM place_visited pv join user u on (u.id = pv.id_user) join country c on (c.id = pv.id_country) where u.id = ?;");
 			this.stmt.setInt(1, id);
 			ResultSet rs = this.stmt.executeQuery();
 
 			while (rs.next()) {
 				User user = new User();
-				user.setId(rs.getInt("id_user"));
+				user.setLogin(rs.getString("login"));
 
 				Country country = new Country();
-				country.setId(rs.getInt("id_country"));
+				country.setName(rs.getString("name"));
 
 				PlaceVisited placeVisited = new PlaceVisited();
 				placeVisited.setCountry(country);
 				placeVisited.setUser(user);
-				placeVisited.setName(rs.getString("name"));
-				placeVisited.setId(rs.getInt("id"));
+				placeVisited.setName(rs.getString("place_visited_name"));
+				placeVisited.setId(rs.getInt("pv_id"));
 				placeVisited.setImage(rs.getString("image"));
 
 				placesVisited.add(placeVisited);

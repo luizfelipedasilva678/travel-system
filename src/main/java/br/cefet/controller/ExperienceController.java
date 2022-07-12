@@ -48,6 +48,12 @@ public class ExperienceController extends HttpServlet implements IController {
 			this.listOne(request, response);
 			return;
 		}
+		
+		if( action.equals("listByUserId")) {
+			this.listPlacesVisitedByUserId(request, response);
+			return;
+		}
+		
 
 		if (action.equals("update")) {
 			this.update(request, response);
@@ -95,12 +101,18 @@ public class ExperienceController extends HttpServlet implements IController {
 		placeVisited.setId(id);
 		PlaceVisitedDAO placeVisitedDAO = new PlaceVisitedDAO();
 		placeVisitedDAO.remove(placeVisited);
+		
+		try {
+			response.sendRedirect(request.getContextPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void listAll(HttpServletRequest request, HttpServletResponse response) {
 		ExperienceDAO experienceDao = new ExperienceDAO();
 		List<Experience> experiences = experienceDao.loadAllExperiences();
-		String pageUrl = experiences == null ? "/views/sections/error.jsp" : "/views/sections/experiences.jsp";
+		String pageUrl = experiences == null ? "/views/sections/general/error.jsp" : "/views/sections/experience/experiences.jsp";
 		
 		try {
 			RequestDispatcher rd = request.getRequestDispatcher(pageUrl);
@@ -120,7 +132,7 @@ public class ExperienceController extends HttpServlet implements IController {
 		int id = Integer.valueOf(request.getParameter("id"));
 		ExperienceDAO experienceDAO = new ExperienceDAO();
 		Experience experience = experienceDAO.loadExperienceById(id);
-		String pageUrl = "/views/experience-page.jsp";
+		String pageUrl = "/views/experience/experience-page.jsp";
 		
 		
 		try {
@@ -152,5 +164,24 @@ public class ExperienceController extends HttpServlet implements IController {
 		ExperienceDAO experienceDAO = new ExperienceDAO();
 
 		experienceDAO.update(experience);
+	}
+	
+	public void listPlacesVisitedByUserId(HttpServletRequest request, HttpServletResponse response) {
+		ExperienceDAO experienceDao = new ExperienceDAO();
+		int userId = Integer.valueOf(request.getParameter("userId"));
+		List<Experience> experiences = experienceDao.loadAllExperiencesByUserId(userId);
+		String pageUrl = experiences == null ? "/views/sections/general/error.jsp" : "/views/sections/experience/user-experiences.jsp";
+		
+		try {
+			RequestDispatcher rd = request.getRequestDispatcher(pageUrl);	
+			
+			if(experiences != null) {
+				request.setAttribute("experiences", experiences);
+			}
+			
+			rd.include(request, response);System.out.println("Teste " + userId);
+		} catch (ServletException | IOException e) {
+			System.out.println("Error on include experiences");
+		}
 	}
 }

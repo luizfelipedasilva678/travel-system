@@ -5,15 +5,15 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="../styles/style.css"/>
+	<link rel="stylesheet" href="../../styles/style.css"/>
 	<title>Cadastre-se</title>
 </head>
 <body>
-	<jsp:include page="/views/sections/header.jsp" flush="true"/>
+	<jsp:include page="/views/sections/general/header.jsp" flush="true"/>
 	<main class="layout"> 
 		<section class="form__wrapper">
 			<h2 class="form__title">Cadastre-se</h2>
-			<form class="form" action="../ControlServlet" method="post">
+			<form class="form" action="../../ControlServlet" method="post">
 				<div class="form__input-wrapper">
 					<label class="form__label" for="login">Login:</label>
 					<input class="form__input" id="login" name="login" type="text"/>
@@ -30,6 +30,6 @@
 			</form>
 		</section>
 	</main>	
-	<jsp:include page="/views/sections/footer.jsp" flush="true"/>
+	<jsp:include page="/views/sections/general/footer.jsp" flush="true"/>
 </body>
 </html>

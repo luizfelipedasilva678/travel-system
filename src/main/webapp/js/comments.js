@@ -20,8 +20,9 @@
 				body: formData
 			})
 			.then(resp => {
-				if(resp.status === 200) {}
-				window.location.reload();
+				if(resp.status === 200) {
+					window.location.reload();				
+				}
 			})
 		})	
 	}

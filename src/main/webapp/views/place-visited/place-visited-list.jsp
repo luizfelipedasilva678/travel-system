@@ -2,28 +2,21 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<% 
-  	session = request.getSession();
-    
-	if(session.getAttribute("user-id") == null) {
-        response.sendRedirect("/travel-system/views/login.jsp");
-    }
-%>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="../styles/style.css"/>
+	<link rel="stylesheet" href="../../styles/style.css"/>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"/>
 	<title>Locais visitados</title>
 </head>
 <body>
-	<jsp:include page="/views/sections/header.jsp" flush="true"/>
+	<jsp:include page="/views/sections/general/header.jsp" flush="true"/>
 	<main class="layout">
 		<jsp:include page="/ControlServlet?action=list&xclass=PlaceVisitedController" flush="true"/>	
 	</main>
-	<jsp:include page="/views/sections/footer.jsp" flush="true"/>
-	<jsp:include page="/views/sections/menu.jsp" flush="true"/>
+	<jsp:include page="/views/sections/general/footer.jsp" flush="true"/>
+	<jsp:include page="/views/sections/general/menu.jsp" flush="true"/>
 	
-	<script src="../js/main.js"></script>
+	<script src="../../js/main.js"></script>
 </body>
 </html>

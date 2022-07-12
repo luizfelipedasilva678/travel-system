@@ -1,6 +1,7 @@
 package br.cefet.controller;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -84,7 +85,7 @@ public class CommentController extends HttpServlet implements IController {
 		int idExperience = Integer.valueOf(request.getParameter("idExperience"));
 		CommentDAO commentDao = new CommentDAO();
 		List<Comment> comments = commentDao.loadAllComments(idExperience);
-		String pageUrl = "/views/sections/comments.jsp";
+		String pageUrl = "/views/sections/experience/comments.jsp";
 		
 		try {
 			RequestDispatcher rd = request.getRequestDispatcher(pageUrl);

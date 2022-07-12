@@ -77,7 +77,7 @@ public class ExperienceDAO {
 				experience.setContent(rs.getString("content"));
 				experience.setRating(rs.getInt("rating"));
 				experience.setTotalCost(rs.getDouble("total_cost"));
-				experience.setDepartureDay(rs.getDate("arrival_day"));
+				experience.setArrivalDay(rs.getDate("arrival_day"));
 				experience.setDepartureDay(rs.getDate("departure_day"));
 				experience.setUser(user);
 				experience.setPlaceVisited(placeVisited);
@@ -128,7 +128,7 @@ public class ExperienceDAO {
 				experience.setContent(rs.getString("content"));
 				experience.setRating(rs.getInt("rating"));
 				experience.setTotalCost(rs.getDouble("total_cost"));
-				experience.setDepartureDay(rs.getDate("arrival_day"));
+				experience.setArrivalDay(rs.getDate("arrival_day"));
 				experience.setDepartureDay(rs.getDate("departure_day"));
 				experience.setUser(user);
 				experience.setPlaceVisited(placeVisited);
@@ -144,6 +144,57 @@ public class ExperienceDAO {
 				stmt.close();
 			} catch (SQLException e) {
 				System.out.println("Error on list experience " + e.getMessage());
+			}
+		}
+	}
+	
+	public List<Experience> loadAllExperiencesByUserId(int id) {
+		List<Experience> experiences = new ArrayList<Experience>();
+		try {
+			this.stmt = this.connection.prepareStatement("select \n" + "e.id, \n" + "e.content, \n" + "e.rating, \n"
+					+ "e.total_cost, \n" + "e.arrival_day, \n" + "e.departure_day, \n" + "pv.image, \n"
+					+ "pv.name as place_visited_name,\n" + "c.name as country_name,\n" + "u.login\n"
+					+ "from experience e \n" + "join place_visited pv on (pv.id = e.id_place_visited)\n"
+					+ "join country c on (c.id = pv.id_country)\n" + "join user u on (u.id = e.id_user)"
+					+ "where u.id = ?");
+			this.stmt.setInt(1, id);
+			ResultSet rs = this.stmt.executeQuery();
+
+			while (rs.next()) {
+				User user = new User();
+				user.setLogin(rs.getString("login"));
+
+				Country country = new Country();
+				country.setName(rs.getString("country_name"));
+
+				PlaceVisited placeVisited = new PlaceVisited();
+				placeVisited.setName(rs.getString("place_visited_name"));
+				placeVisited.setImage(rs.getString("image"));
+				placeVisited.setCountry(country);
+
+				Experience experience = new Experience();
+				experience.setId(rs.getInt("id"));
+				experience.setContent(rs.getString("content"));
+				experience.setRating(rs.getInt("rating"));
+				experience.setTotalCost(rs.getDouble("total_cost"));
+				experience.setArrivalDay(rs.getDate("arrival_day"));
+				experience.setDepartureDay(rs.getDate("departure_day"));
+				experience.setUser(user);
+				experience.setPlaceVisited(placeVisited);
+
+				experiences.add(experience);
+			}
+
+			return experiences;
+
+		} catch (SQLException e) {
+			System.out.println("Error on list experiences by user id" + e.getMessage());
+			return null;
+		} finally {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				System.out.println("Error on list experiences by user id" + e.getMessage());
 			}
 		}
 	}

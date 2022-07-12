@@ -79,7 +79,6 @@ public class PlaceVisitedController extends HttpServlet implements IController {
     		File file = new File(uploads, fileName);
     		Files.copy(fileContent, file.toPath());
     		
-    		
     		return "/travel-system/static/" + fileName;
     		
     	} catch(Exception e) {
@@ -110,7 +109,7 @@ public class PlaceVisitedController extends HttpServlet implements IController {
 			PlaceVisitedDAO placeVisitedDao = new PlaceVisitedDAO();
 			placeVisitedDao.add(placeVisited);
 			
-			response.sendRedirect(request.getContextPath() + "/views/place-visited-list.jsp");
+			response.sendRedirect(request.getContextPath() + "/views/place-visited/place-visited-list.jsp");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,12 +123,18 @@ public class PlaceVisitedController extends HttpServlet implements IController {
 		placeVisited.setId(id);
 		PlaceVisitedDAO placeVisitedDao = new PlaceVisitedDAO();
 		placeVisitedDao.remove(placeVisited);
+		
+		try {
+			response.sendRedirect(request.getContextPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void listAll(HttpServletRequest request, HttpServletResponse response) {
 		PlaceVisitedDAO placeVisitedDao = new PlaceVisitedDAO();
 		List<PlaceVisited> placesVisited = placeVisitedDao.loadAllPlaceVisited();		
-		String pageUrl = placesVisited == null ? "/views/sections/error.jsp" : "/views/sections/places-visited.jsp";
+		String pageUrl = placesVisited == null ? "/views/sections/general/error.jsp" : "/views/sections/place-visited/places-visited.jsp";
 		
 		try {
 			RequestDispatcher rd = request.getRequestDispatcher(pageUrl);	
@@ -147,8 +152,9 @@ public class PlaceVisitedController extends HttpServlet implements IController {
 	public void listPlacesVisitedByUserId(HttpServletRequest request, HttpServletResponse response) {
 		PlaceVisitedDAO placeVisitedDao = new PlaceVisitedDAO();
 		int userId = Integer.valueOf(request.getParameter("userId"));
+		String page = String.valueOf(request.getParameter("page"));
 		List<PlaceVisited> placesVisited = placeVisitedDao.loadAllPlaceVisitedByUserId(userId);		
-		String pageUrl = placesVisited == null ? "/views/sections/error.jsp" : "/views/sections/select-places-visited.jsp";
+		String pageUrl = placesVisited == null ? "/views/sections/general/error.jsp" : "/views/sections/place-visited/" + page;
 		
 		try {
 			RequestDispatcher rd = request.getRequestDispatcher(pageUrl);	
@@ -159,7 +165,7 @@ public class PlaceVisitedController extends HttpServlet implements IController {
 			
 			rd.include(request, response);
 		} catch (ServletException | IOException e) {
-			System.out.println("Error on include experiences");
+			System.out.println("Error on include places visited");
 		}
 	}
 
