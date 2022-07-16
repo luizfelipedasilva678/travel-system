@@ -127,43 +127,54 @@ public class PlaceVisitedDAO {
 		Country country = new Country();
 
 		try {
-			this.commandSQL = "select * from place_visited where id = ?";
+			this.commandSQL = 
+					"SELECT "
+					+ "pv.name as place_visited_name, "
+					+ "pv.id as pv_id,"
+					+ "pv.image, "
+					+ "u.login, "
+					+ "c.name "
+					+ "FROM place_visited pv join user u on (u.id = pv.id_user) "
+					+ "join country c on (c.id = pv.id_country) "
+					+ "where pv.id = ?;";
 			this.stmt = this.connection.prepareStatement(this.commandSQL);
 			this.stmt.setInt(1, id);
 			ResultSet rs = this.stmt.executeQuery();
 
 			if (rs.next()) {
-				user.setId(rs.getInt("id_user"));
+				user.setLogin(rs.getString("login"));
 
-				country.setId(rs.getInt("id_country"));
+				country.setName(rs.getString("name"));
 
 				placeVisited.setCountry(country);
 				placeVisited.setUser(user);
-				placeVisited.setId(rs.getInt("id"));
+				placeVisited.setName(rs.getString("place_visited_name"));
+				placeVisited.setId(rs.getInt("pv_id"));
 				placeVisited.setImage(rs.getString("image"));
 			}
 
 			return placeVisited;
 
 		} catch (SQLException e) {
-			System.out.println("Error on list place visited" + e.getMessage());
+			System.out.println("Error on list place visited " + e.getMessage());
 			return null;
 		} finally {
 			try {
 				stmt.close();
 			} catch (SQLException e) {
-				System.out.println("Error on list place visited" + e.getMessage());
+				System.out.println("Error on list place visited " + e.getMessage());
 			}
 		}
 	}
 
 	public void update(PlaceVisited placeVisited) {
 		try {
-			this.commandSQL = "Update place_visited SET image = ? WHERE id = ?";
+			this.commandSQL = "Update place_visited SET image = ?, name = ? WHERE id = ?";
 			this.stmt = this.connection.prepareStatement(this.commandSQL);
 
 			this.stmt.setString(1, placeVisited.getImage());
-			this.stmt.setInt(2, placeVisited.getId());
+			this.stmt.setString(2, placeVisited.getName());
+			this.stmt.setInt(3, placeVisited.getId());
 
 			this.stmt.execute();
 		} catch (SQLException e) {

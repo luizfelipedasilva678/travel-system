@@ -3,11 +3,24 @@
 <nav class="menu-container d-none">
 	<% 
 		session = request.getSession();	
+		String role = String.valueOf(session.getAttribute("user-role"));
 	%>
 	<button class="menu-container__btn-close menu-btn-close">
 		<i class="menu-btn-close bi bi-x"></i>
 	</button>
 	<ul>
+		<% 
+			if(session.getAttribute("user-id") != null) {
+		%>
+			<li>
+				<p class="menu-container__ul-submenu"> Olá,  <%= session.getAttribute("user-login") %></p>
+			</li>
+		<% } %>
+		<% if (role.equals("2")) { %>
+			<li>
+				<a href="/travel-system/views/users/users-list.jsp" class="menu-container__ul-submenu"> Consultar usuários </a>
+			</li>
+		<% } %>
 		<li>
 			<a href="/travel-system" class="menu-container__ul-submenu"> Voltar para home </a>
 		</li>

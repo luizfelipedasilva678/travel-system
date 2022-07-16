@@ -13,7 +13,9 @@
 <body>
 	<jsp:include page="/views/sections/general/header.jsp" flush="true"/>
 	<main class="layout h-90">
-		<jsp:include page="/ControlServlet?action=list&xclass=UserController" flush="true"/>	
+		<section class="error-page">
+		<h2>Ops ocorreu algum erro ao acessar essa página :( </h2>
+	</section>	
 	</main>
 	<jsp:include page="/views/sections/general/footer.jsp" flush="true"/>
 	<jsp:include page="/views/sections/general/menu.jsp" flush="true"/>

@@ -151,6 +151,7 @@ public class UserDAO {
             	loggedUser = new User();
             	loggedUser.setId(rs.getInt("id"));
             	loggedUser.setLogin(rs.getString("login"));
+            	loggedUser.setRole(rs.getInt("role"));
             }
             
             return loggedUser;

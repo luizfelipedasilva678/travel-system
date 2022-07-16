@@ -89,9 +89,9 @@ public class UserController extends HttpServlet implements IController {
 		List<User> users = userDao.loadAllUsers();
 		
 		try {
-			RequestDispatcher rd = request.getRequestDispatcher("/views/users/users-list.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/views/sections/users/users-list.jsp");
 			request.setAttribute("users", users);
-			rd.forward(request, response);
+			rd.include(request, response);
 		} catch (ServletException | IOException e) {
 			System.out.println("Error on include users");
 		}
@@ -138,7 +138,8 @@ public class UserController extends HttpServlet implements IController {
 			session = request.getSession();
 			session.setAttribute("user-id", loggedUser.getId());
 			session.setAttribute("user-login", loggedUser.getLogin());
-				
+			session.setAttribute("user-role", loggedUser.getRole());
+			
 			try {
 				response.sendRedirect(request.getContextPath());
 				return;
@@ -154,7 +155,7 @@ public class UserController extends HttpServlet implements IController {
         
         
         try {
-			response.sendRedirect(request.getContextPath() + "/views/login-and-register/login.jsp");
+			response.sendRedirect(request.getContextPath());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

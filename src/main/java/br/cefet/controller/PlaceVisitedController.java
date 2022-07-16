@@ -125,7 +125,7 @@ public class PlaceVisitedController extends HttpServlet implements IController {
 		placeVisitedDao.remove(placeVisited);
 		
 		try {
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(request.getContextPath() + "/views/place-visited/user-place-visited.jsp");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -173,18 +173,41 @@ public class PlaceVisitedController extends HttpServlet implements IController {
 		int id = Integer.valueOf(request.getParameter("id"));
 		PlaceVisitedDAO placeVisitedDao = new PlaceVisitedDAO();
 		PlaceVisited placeVisited = placeVisitedDao.loadPlaceVisitedById(id);
-
-		System.out.println("Teste " + placeVisited.getId() + " " + placeVisited.getImage());
+		String pageUrl = "/views/place-visited/place-visited-edit.jsp";
+		
+		try {
+			RequestDispatcher rd = request.getRequestDispatcher(pageUrl);	
+			request.setAttribute("placeVisited", placeVisited);
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+			System.out.println("Error on forward place visited");
+		}
 	}
 
 	public void update(HttpServletRequest request, HttpServletResponse response) {
-		int id = Integer.valueOf(request.getParameter("id"));
-		String image = this.fileUpload(request);
-		PlaceVisited placeVisited = new PlaceVisited();
-		placeVisited.setImage(image);
-		placeVisited.setId(id);
-		PlaceVisitedDAO placeVisitedDao = new PlaceVisitedDAO();
-		placeVisitedDao.update(placeVisited);
+		try {
+			Part filePart = request.getPart("file");
+			int id = Integer.valueOf(request.getParameter("id"));
+			
+			PlaceVisited placeVisited = new PlaceVisited();
+			
+			String name = String.valueOf(request.getParameter("name"));
+			
+			if(filePart.getSize() != 0) {
+				String image = this.fileUpload(request);
+				placeVisited.setImage(image);				
+			}
+			
+			placeVisited.setId(id);
+			placeVisited.setName(name);
+			PlaceVisitedDAO placeVisitedDao = new PlaceVisitedDAO();
+			placeVisitedDao.update(placeVisited);
+			
+			response.sendRedirect(request.getContextPath() + "/views/place-visited/user-place-visited.jsp");
+			
+		} catch (IOException | ServletException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 }

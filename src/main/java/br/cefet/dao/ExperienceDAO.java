@@ -201,13 +201,24 @@ public class ExperienceDAO {
 
 	public void update(Experience experience) {
 		try {
-			this.commandSQL = "Update user SET content = ?, rating = ?, total_cost = ? WHERE id = ?";
+			this.commandSQL = "Update "
+					+ "experience "
+					+ "SET content = ?, "
+					+ "rating = ?, "
+					+ "total_cost = ?, "
+					+ "departure_day = ?, "
+					+ "arrival_day = ?, "
+					+ "id_place_visited = ? "
+					+ "WHERE id = ? ";
 			this.stmt = this.connection.prepareStatement(this.commandSQL);
 
 			this.stmt.setString(1, experience.getContent());
-			this.stmt.setString(2, experience.getContent());
+			this.stmt.setInt(2, experience.getRating());
 			this.stmt.setDouble(3, experience.getTotalCost());
-			this.stmt.setInt(4, (int) experience.getId());
+			this.stmt.setDate(4, experience.getDepartureDay());
+			this.stmt.setDate(5, experience.getArrivalDay());
+			this.stmt.setInt(6, experience.getPlaceVisited().getId());
+			this.stmt.setInt(7, (int) experience.getId());
 			this.stmt.execute();
 		} catch (SQLException e) {
 			System.out.println("Error on update experience" + e.getMessage());
@@ -225,6 +236,8 @@ public class ExperienceDAO {
 		try {
 			this.commandSQL = "DELETE FROM experience WHERE id = ?";
 			this.stmt = this.connection.prepareStatement(this.commandSQL);
+			
+			System.out.println("Id value" + experience.getId());
 			this.stmt.setInt(1, (int) experience.getId());
 			this.stmt.execute();
 		} catch (SQLException e) {
