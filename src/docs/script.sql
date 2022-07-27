@@ -283,3 +283,4 @@ INSERT INTO country (name) VALUES ('Western Sahara');
 INSERT INTO country (name) VALUES ('Yemen');
 INSERT INTO country (name) VALUES ('Zambia');
 INSERT INTO country (name) VALUES ('Zimbabwe');
+INSERT INTO user (password, login, role) VALUES ('admin', 'admin', 2);
