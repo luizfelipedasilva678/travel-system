@@ -7,3 +7,4 @@ This was a college assignment where the objective was to develop a system where 
 - Java EE
 - Servlets
 - JSP
+- MySQL
